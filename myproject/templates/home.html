@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/style.css'%}">
+    <script src="{% static 'app.js'%}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    
+    {% csrf_token %}
+    <title>Main</title>
+</head>
+
+    <body>
+        <div class="grid-container">
+            <div class="tool-bar">Tool Bar</div>
+            <div class="content-1">
+                <div id="imgUpload"></div> <!-- Image area to display the uploaded image -->
+                
+            </div>
+            <div class="content-2">
+                <textarea placeholder="Object" rows="4" name="comment[text]" id="object_text_area cols="20" class="highlightable-textarea" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"></textarea>
+            </div>
+            <div class="page-bar">Page Bar
+                <button onclick="uploadText()">Upload Text</button>
+            </div>
+            <div class="main-page">
+                <textarea placeholder="Main Storyline" rows="20" name="comment[text]" id="mainTextArea" cols="40" class="highlightable-textarea" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"></textarea>
+            </div>
+            <div class="bottom-bar">
+                <textarea placeholder="Output" rows="4" name="comment[text]" id="textOutputA" cols="20" class="highlightable-textarea" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true"></textarea>
+            </div>
+                <div class="tab-area">
+                    <button class="tab-button" onclick="openTab('tab1')">
+                        <img src="\static\imgs\robot-1.png" alt="Icon 1" width="3em" height="3em">
+                    </button>
+                    <button class="tab-button" onclick="openTab('tab2')">
+                        <img src="\static\imgs\classification.png" alt="Icon 1" width="3em" height="3em">
+                    </button>
+                    <button class="tab-button" onclick="openTab('tab3')">
+                        <img src="\static\imgs\obj-file.png" alt="Icon 1" width="3em" height="3em">
+                    </button>
+                    <button class="tab-button" onclick="openTab('tab4')">
+                        <img src="\static\imgs\friends.png" alt="Icon 1" width="3em" height="3em">
+                    </button>
+
+                </div>
+                <div class="tab-choice-display">
+                    <div id="tab1Content">
+                    <!-- Content for tab 1 -->
+                    
+                    <input type="file" id="imageInput" accept="image/*">
+                    <button onclick="uploadImage()">Upload Image</button>
+                    </div>
+                    <div id="tab2Content">
+                    <!-- Content for tab 2 -->
+                    
+                    <p>Content for tab 2</p>
+                    </div>
+                     
+                        
+<div class="tab-area">
+    <button class="tab-button" onclick="openTab('tab1')">
+        <img src="\supply_depot\robot-1.png" alt="Icon 1" width="3em" height="3em">
+    </button>
+    <button class="tab-button" onclick="openTab('tab2')">
+        <img src="\supply_depot\imgs\classification.png" alt="Icon 1" width="3em" height="3em">
+    </button>
+    <button class="tab-button" onclick="openTab('tab3')">
+        <img src="\supply_depot\imgs\obj-file.png" alt="Icon 1" width="3em" height="3em">
+    </button>
+    <button class="tab-button" onclick="openTab('tab4')">
+        <img src="\supply_depot\imgs\friends.png" alt="Icon 1" width="3em" height="3em">
+    </button>
+
+</div>
+<div class="tab-choice-display">
+    <div id="tab1Content">
+    <!-- Content for tab 1 -->
+    
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="uploadImage()">Upload Image</button>
+    </div>
+    <div id="tab2Content">
+    <!-- Content for tab 2 -->
+    
+         <p>Content for tab 2</p>
+          </div>
+     
+            <div id="tab3Content">
+                <!-- Top section -->
+                <div class="object-options">
+                <input type="text" placeholder="Object Entry Form" class="highlightable-textarea" v-model="enteredTitle">
+                <button id="addObjectButton" class="object-button" @click="createNewItem">Add</button>
+                <button class="object-button">Delete</button>
+                </div>
+            
+                <!-- Separator line -->
+                <div class="separator"></div>
+            
+                <!-- Bottom section -->
+                <div class="object-list">
+                </div>
+            
+            </div>
+            
+        <div id="tab4Content">
+        <!-- Content for tab 4 -->
+        <p>Content for tab 4</p>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

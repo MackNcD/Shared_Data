@@ -1,0 +1,185 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    max-height: 70vh;
+    background-color: rgb(169, 169, 169);
+    color: aliceblue;
+    }
+
+div{
+    padding: 0;
+}
+    
+.grid-container {
+    height: 100%;
+    gap: 1em;
+    display: grid;
+    outline: 0.5em solid rgb(140, 0, 255);
+    grid-template-columns: 0.2fr 0.2fr 1.8fr 0.2fr 0.2fr 1.8fr 0.4fr 0.8fr;
+    grid-template-rows: 0.2fr 0.2fr 0.7fr 0.2fr 0.2fr;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "tool-bar tool-bar tool-bar page-bar page-bar page-bar tab-area tab-area"
+        "content-1 content-1 content-1 main-page main-page main-page tab-choice-display tab-choice-display"
+        "content-1 content-1 content-1 main-page main-page main-page tab-choice-display tab-choice-display"
+        "content-2 content-2 content-2 bottom-bar bottom-bar bottom-bar tab-choice-display tab-choice-display"
+        "content-2 content-2 content-2 bottom-bar bottom-bar bottom-bar tab-choice-display tab-choice-display"
+    }
+
+.tool-bar {
+    grid-area: tool-bar; /* row 1, column 1, rowspan 1, colspan 3 */
+    background-color: rgba(93, 93, 93, 0.462);
+}
+.content-1 {
+    grid-area: content-1; /* row 2, column 1, rowspan 8, colspan 3 */
+    background-color: rgb(24, 24, 24);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content-2 {
+    grid-area: content-2; /* row 9, column 1, rowspan 8, colspan 3 */
+    background-color: rgba(88, 88, 88, 0.307);
+}
+
+.page-bar {
+    grid-area: page-bar; /* row 1, column 4, rowspan 1, colspan 3 */
+}
+
+.main-page {
+    grid-area: main-page; /* row 2, column 4, rowspan 8, colspan 3 */
+}
+
+.bottom-bar {
+    grid-area: bottom-bar; /* row 9, column 4, rowspan 8, colspan 3 */
+}
+
+.tab-area {
+    grid-area: tab-area; /* row 1, column 7, rowspan 2, colspan 2 */
+}
+
+.tab-choice-display {
+    grid-area: tab-choice-display; /* row 3, column 7, rowspan 14, colspan 2 */
+    /* Add your specific styles for this element */
+}
+    
+textarea {
+    place-self: center stretch;
+    width: 100%;
+    grid-area: textarea;
+    height: 100%;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+    border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+    border-image: none;
+    border-radius: 7px 7px 7px 7px;
+    border-style: none solid solid none;
+    border-width: medium 1px 1px medium;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+    color: #555555;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 1em;
+    line-height: 1.4em;
+    padding: 5px 5px;
+    transition: background-color 0.2s ease 0s;
+}
+    
+textarea:focus {
+        background: none repeat scroll 0 0 #ffffff;
+        outline-width: 0;
+}
+
+
+.tab-area {
+    display: flex;
+  }
+
+.tab-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 1em;
+}
+
+.tab-button img {
+    width: 3em;
+    height: 3em;
+  background: rgb(6,14,131);
+  background: linear-gradient(0deg, rgba(188, 185, 160, 0.189) 0%, rgba(129, 172, 140, 0.216) 100%);
+  border: none;
+}
+
+.tab-button:hover img {
+    width: 3em;
+    height: 3em;
+    background: rgb(0,3,255);
+    background: linear-gradient(0deg, rgb(121, 121, 121) 0%, rgba(158, 158, 158, 0.641) 100%);
+
+}
+
+.tab-display-area-frame {
+    display: none;
+}
+
+  
+.tab-choice-display > div {
+    display: none;
+  }
+
+  /* story objects area */
+  .options {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .top-half {
+    padding: 20px;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .separator {
+    height: 2px;
+    background-color: #ccc;
+  }
+  
+  .bottom-half {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .object-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .object-text {
+    background-color: #3498db;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 10px 0 0 10px;
+  }
+  
+  .object-button {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 0 10px 10px 0;
+    cursor: pointer;
+  }
+  
+  /* Add more colors for buttons as needed */
+  .object-button.blue { background-color: #3498db; }
+  .object-button.green { background-color: #2ecc71; }
+  .object-button.orange { background-color: #e67e22; }

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/style.css'%}">
+    <script src="{% static 'app.js'%}"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.js"></script>
+    
+    {% csrf_token %}
+    <title>Main</title>
+</head>
+
+
+<style>
+.object-options {
+    display: flex;
+    align-items: center;
+    height: 14.28%; /* 1/7th of the container */
+    width: 10em;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.object-entry-form {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.object-button {
+    margin-left: 5px;
+}
+
+.separator {
+    height: 1em;
+    background-color: #00000030;
+}
+/*                                        */
+.object-list {
+    height: 85.72%; /* 6/7th of the container */
+    overflow-y: scroll;
+    padding: 2em;
+    box-sizing: border-box;
+}
+
+.object-item {
+    display: flex;
+    border-color: #000000;
+    align-items: center;
+    gap: 2em;
+    height: calc(100% / 12); /* 1/12th of the object-list height */
+}
+
+.object-text {
+    background-color: #8a8a8a58;
+    width: auto;
+    color: #000000;
+    max-width: 20em;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.object-color {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+</style>
+
+<div class="tab-area">
+    <button class="tab-button" onclick="openTab('tab1')">
+        <img src="\static\imgs\robot-1.png" alt="Icon 1" width="3em" height="3em">
+    </button>
+    <button class="tab-button" onclick="openTab('tab2')">
+        <img src="\static\imgs\classification.png" alt="Icon 1" width="3em" height="3em">
+    </button>
+    <button class="tab-button" onclick="openTab('tab3')">
+        <img src="\static\imgs\obj-file.png" alt="Icon 1" width="3em" height="3em">
+    </button>
+    <button class="tab-button" onclick="openTab('tab4')">
+        <img src="\static\imgs\friends.png" alt="Icon 1" width="3em" height="3em">
+    </button>
+
+</div>
+<div class="tab-choice-display">
+    <div id="tab1Content">
+    <!-- Content for tab 1 -->
+    
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="uploadImage()">Upload Image</button>
+    </div>
+    <div id="tab2Content">
+    <!-- Content for tab 2 -->
+    
+    <p>Content for tab 2</p>
+    </div>
+     
+        <div id="tab3Content">
+            <!-- Top section -->
+            <div class="object-options">
+              <input type="text" placeholder="Object Entry Form" class="highlightable-textarea" v-model="enteredTitle">
+              <button id="addObjectButton" class="object-button" @click="createNewItem">Add</button>
+              
+              
+              
+              <button class="object-button">Delete</button>
+            </div>
+          
+            <!-- Separator line -->
+            <div class="separator"></div>
+          
+            <!-- Bottom section -->
+            <div class="object-list">
+              <div v-for="item in items" :key="item.title" class="object-item">
+                <p class="object-text">{{ item.title }}</p>
+                <div class="object-color" :style="{ backgroundColor: item.color }"></div>
+              </div>
+            </div>
+          
+            <p>
+              {{ title }} {{ color }} {{ pic }} {{ info }} {{ featured }} {{ type }}
+            </p>
+            <button @click="alterName()">Alter Name</button>
+          </div>
+    <div id="tab4Content">
+    <!-- Content for tab 4 -->
+    <p>Content for tab 4</p>
+    </div>
+</div>
+</div>
+
+<script>
+  
+
+/* VUE */
+
+new Vue({
+    el: '#tab3Content',
+    data: {
+      items: [], // Array to store the dynamically created items
+      colors: ['#ff6b6b', '#ffa500', '#ffd700', '#8fbc8f', '#87cefa', '#ba55d3'], // List of colors
+      currentColorIndex: 0, // Index to keep track of the current color
+      enteredTitle: 'Successful Test!', // Highlighted text from the textarea
+    },
+    // Other properties and methods
+    methods: {
+      createNewItem() {
+        console.log('createNewItem method started');
+  
+        const newItem = {
+          title: this.enteredTitle,
+          color: this.colors[this.currentColorIndex],
+          pic: '/static/imgs/default.png',
+          type: '(type unassigned)',
+          info: `No information currently added to this ${this.enteredTitle}`,
+          featured: false,
+        };
+  
+        console.log('New item created:', newItem);
+        
+  
+      this.items.push(newItem);
+      this.currentColorIndex = (this.currentColorIndex + 1) % this.colors.length; // Update the color index
+    },
+
+
+    // Other methods
+  }
+})
+</script>
