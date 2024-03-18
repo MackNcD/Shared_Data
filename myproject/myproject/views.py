@@ -19,7 +19,7 @@ def test(request):
     return render(request, 'test.html')
 
 llm = Llama (
-    model_path= "static\supply_depot\mistral-7b-v0.1-layla-v4-Q8_0.gguf",
+    model_path= "static\supply_depot\luna-ai-llama2-uncensored.Q6_K.gguf",
     chat_format="llama-2",
     n_gpu_layers=10, # Uncomment to use GPU acceleration
     # seed=1337, # Uncomment to set a specific seed
