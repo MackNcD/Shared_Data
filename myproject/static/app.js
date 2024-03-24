@@ -1,17 +1,7 @@
-
-
-console.log("Hello World");
-
-//learn Vue or React or whatever, get basics course
-
-//Story Object List JS ------------------------------------------------
-
-
-
-//---------------------------------------------------------  
-
 // JavaScript tab panel-------------------------------------
 let currentTab = 'tab1'; // Default tab
+
+let vueInstance = null;
 
 function openTab(tab) {
   // Hide all content panels
@@ -22,10 +12,36 @@ function openTab(tab) {
   // Show the selected content panel
   document.getElementById(tab + 'Content').style.display = 'block';
 
+  if (tab === 'tab3') {
+    // If the Vue instance doesn't exist, create it
+    if (!vueInstance) {
+      createVueInstance();
+    }
+  }
+
   currentTab = tab;
 }
 
-//--------------------------------------------------
+/* fade background */
+document.addEventListener('DOMContentLoaded', function() {
+    const textarea_fade = document.getElementById('mainTextArea');
+    if (textarea_fade) {
+        textarea_fade.addEventListener('focus', () => {
+            const textarea_fade = document.getElementById('mainTextArea');
+
+textarea_fade.addEventListener('focus', () => {
+    document.body.style.backgroundColor = '#181818'; /* Change background color to nearly black */
+});
+
+textarea_fade.addEventListener('blur', () => {
+    document.body.style.backgroundColor = '#a9a9a9'; /* Change background color back to gray */
+});
+        });
+    } else {
+        console.error('Textarea element not found.');
+    }
+});
+
 
 //Highlight text, store
 var highlightedText = ''; // Global variable to store highlighted text
@@ -74,15 +90,19 @@ function getSelectedText(elementClass) {
     }
 }
 
+let prompt_type = 'default';
+
 function uploadText() {
     const outputTextarea = document.getElementById('textOutputA');
 
     // Show loading animation or progress bar
     outputTextarea.value = 'Processing...';
 
-    const data = { text: highlightedText };
+    const data = { text: highlightedText, //                               LLM_process text args for views.py
+                prompt_type: prompt_type,
+            };
 
-    fetch('/process_text/', {
+    fetch('/process_text/', { //                fetch process_text
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -118,9 +138,6 @@ function uploadText() {
         textarea.focus();
     }
 }
-
-
-
 
 
 function getCookie(name) {
@@ -160,8 +177,71 @@ function uploadImage() {
     });
 }
 
+function createVueInstance() {
+    // Create the Vue instance only if it doesn't exist
+    if (!vueInstance) {
+      vueInstance = new Vue({
+        el: '#tab3Content',
+        data: {
+          items: [],
+          colors: ['#ff6b6b', '#ffa500', '#ffd700', '#8fbc8f', '#87cefa', '#ba55d3'],
+          currentColorIndex: 0,
+          enteredTitle: '',
+          idNumber: 0,
+          selectedItem: null
+        },
+        computed: {
+            itemsHTML() {
+                return this.items.map((item, index) => {
+                  const itemHTML = `
+                    <div class="object-container" style="border-color: ${item.color};">
+                      <span class="object-text" style="color: ${item.color};">${item.title}</span>
+                      <div class="object-color" style="background-color: ${item.color}"></div>
+                      <input type="radio" name="object-select" value="${item.id}" :checked="selectedItem === item.id" @change="selectItem(item)">
+                    </div>
+                  `;
+                  return itemHTML;
+                }).join('');
+          }
+        },
+        methods: {
+          createNewItem() {
+            if (this.enteredTitle.trim() !== '') {
+              const newItem = {
+                ID: this.idNumber,
+                title: this.enteredTitle,
+                color: this.colors[this.currentColorIndex],
+                pic: '/static/imgs/card.png',
+                type: '(type unassigned)',
+                info: `No information currently added to this ${this.enteredTitle}`,
+                featured: false,
+                selected: false
+              };
+              this.items.push(newItem);
+              this.currentColorIndex = (this.currentColorIndex + 1) % this.colors.length;
+              this.idNumber = (this.idNumber + 1)
+              console.log(newItem)
+              this.enteredTitle = ''; // Clear the input field after adding the item
+            }
+          },
+          selectItem(item) {
+            console.log('selectItem called');
+            this.selectedItem = item.id;
+            this.updateSelectedItem(item);
+          },
+          updateSelectedItem(item) {
+            console.log('updateSelectedItem called');
+            const storyObjectImage = document.getElementById('story-object-image');
+            const storyObjectInfoTextarea = document.getElementById('story-object-info-textarea');
+          
+            if (storyObjectImage && storyObjectInfoTextarea) {
+              storyObjectImage.src = item.pic;
+              storyObjectInfoTextarea.value = item.info;
+            }
+          },
+        }
+      });
+    }
+  }
 
-
-
-/* VUE */
-
+//    <div class="object-color" style="background-color: ${item.color}"></div>
